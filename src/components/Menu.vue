@@ -1,22 +1,28 @@
 <template>
-  <component
-    :is="component"
-    v-if="componentExist(component)"
-    @component="changeComponent"
-  >
-  </component>
-  <Menu
-    v-else
-    :buttons="buttons"
-    @component="changeComponent"
-  />
+  <div class="fr" style="flex-wrap: wrap">
+    <input
+      @input="hotkey"
+      @focusout="refocus"
+      type="text"
+      autofocus=""
+      style="width: 1px; height: 1px; position: absolute; top: -100px"
+    />
+    <button
+      v-for="block in buttons"
+      :key="block.alias"
+      class="fc box aic noselect"
+      @click="choise(block.alias)"
+    >
+      <div class="fc item aic">
+        <span class="iconfont" :class="block.icon"></span
+        ><span class="b-txt">{{ block.text }}</span>
+      </div>
+    </button>
+  </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import Menu from './components/Menu.vue';
-import json from './components/json.vue';
-import base64 from './components/base64.vue';
 
 declare interface Block {
   text: string;
@@ -25,23 +31,27 @@ declare interface Block {
 }
 
 @Options({
-  components: {
-    Menu,
-    json,
-    base64,
+  props: {
+    buttons: Array,
   },
   methods: {
-    componentExist(name: string): boolean {
-      return name in this.$options.components;
+    choise(block: string) {
+      this.$emit('component', block);
     },
-    changeComponent(component: string) {
-      this.component = component;
+    hotkey(event: Event) {
+      if (event instanceof InputEvent) {
+        const char = event.data;
+        console.log(char);
+      }
+    },
+    refocus(event: Event) {
+      if (event.target instanceof HTMLInputElement) {
+        event.target.select();
+      }
     },
   },
 })
-export default class App extends Vue {
-  component = '';
-
+export default class Menu extends Vue {
   buttons?: Array<Block> = [
     { icon: 'icon-json', text: 'JSON Format(j)', alias: 'json' },
     { icon: 'icon-suffix-url', text: 'URL Encode(u)', alias: 'urlEncode' },
@@ -58,9 +68,8 @@ export default class App extends Vue {
     { icon: 'icon-erweima', text: 'QRCode Generater(q)', alias: 'qrcode' },
   ];
 
-  mounted(): void {
-    this.component = '1';
-  }
+  // mounted(): void {
+  // }
 }
 </script>
 
