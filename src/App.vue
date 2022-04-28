@@ -16,7 +16,10 @@
 import { Options, Vue } from 'vue-class-component';
 import Menu from './components/Menu.vue';
 import json from './components/json.vue';
+import qrcode from './components/qrcode.vue';
 import base64 from './components/base64.vue';
+import urlEncode from './components/urlEncode.vue';
+import timestamp from './components/timestamp.vue';
 
 declare interface Block {
   text: string;
@@ -29,6 +32,9 @@ declare interface Block {
     Menu,
     json,
     base64,
+    qrcode,
+    urlEncode,
+    timestamp,
   },
   methods: {
     componentExist(name: string): boolean {
@@ -43,17 +49,17 @@ export default class App extends Vue {
   component = '';
 
   buttons?: Array<Block> = [
+    {
+      icon: 'icon-bianmashengchengqix',
+      text: 'Base64 Convert(b)',
+      alias: 'base64',
+    },
     { icon: 'icon-json', text: 'JSON Format(j)', alias: 'json' },
     { icon: 'icon-suffix-url', text: 'URL Encode(u)', alias: 'urlEncode' },
     {
       icon: 'icon-Field-time',
       text: 'Timestamp Convert(t)',
       alias: 'timestamp',
-    },
-    {
-      icon: 'icon-bianmashengchengqix',
-      text: 'Base64 Convert(b)',
-      alias: 'base64',
     },
     { icon: 'icon-erweima', text: 'QRCode Generater(q)', alias: 'qrcode' },
   ];

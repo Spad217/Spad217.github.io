@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && mv ./dist/* ./ext/",
+    "build": "vue-cli-service build && rsync -avzm --remove-source-files dist/ ext/",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

@@ -13,12 +13,18 @@ import { Options, Vue } from 'vue-class-component';
   },
   methods: {
     encode(str: string): string {
-      console.log(str);
-      return btoa(str || '');
+      try {
+        return btoa(str || '');
+      } catch (err) {
+        return '';
+      }
     },
     decode(str: string): string {
-      console.log(str);
-      return atob(str || '');
+      try {
+        return atob(str || '');
+      } catch (err) {
+        return '';
+      }
     },
   },
 })
